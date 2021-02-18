@@ -1,11 +1,9 @@
-import './App.css';
-import MapContainer from './MapContainer';
+import Map from './Map';
 
 const App = () => {
   return (
-    <div>
-      <h1>App</h1>
-      <MapContainer />
+    <div className="App">
+      <Map />
     </div>
   );
 };
