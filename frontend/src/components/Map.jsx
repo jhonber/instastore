@@ -67,7 +67,7 @@ const Map = ({ userPosition, closestStore }) => {
   const ChangeCenter = ({ center }) => {
     const map = useMap();
     if (centerPosition && storePosition) {
-      map.fitBounds([centerPosition, storePosition], { padding: [10, 10] });
+      map.fitBounds([centerPosition, storePosition], { padding: [30, 30] });
     } else if (
       center[0] >= -90 &&
       center[0] <= 90 &&

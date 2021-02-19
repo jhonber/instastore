@@ -48,4 +48,10 @@ router.get('/closest', (req, res) => {
   });
 });
 
+router.get('/tracks', (req, res) => {
+  res.json({
+    tracks: memoAllTracks,
+  });
+});
+
 module.exports = router;
