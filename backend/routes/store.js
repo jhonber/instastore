@@ -9,7 +9,6 @@ const memoAllTracks = [];
 
 router.get('/closest', (req, res) => {
   const { latitude, longitude } = req.query;
-  console.log('memoAllTracks: ', memoAllTracks);
 
   if (!latitude || !longitude) {
     res.status(400).json({
@@ -19,7 +18,6 @@ router.get('/closest', (req, res) => {
   }
 
   const userPosition = [parseFloat(latitude, 10), parseFloat(longitude, 10)];
-  console.log('userPosition: ', userPosition);
 
   if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
     res.status(400).json({
@@ -27,10 +25,8 @@ router.get('/closest', (req, res) => {
     });
     return;
   }
-  console.log('userPosition: ', userPosition);
 
   calculateClosestStore(userPosition, stores).then((closestStore) => {
-    console.log('closestStore: ', closestStore);
     const ipAddress =
       req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const track = {
