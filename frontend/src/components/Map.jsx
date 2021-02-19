@@ -24,6 +24,16 @@ const Map = ({ userPosition, closestStore }) => {
     setStorePosition(closestStore.coordinates);
   }, [closestStore]);
 
+  const showCoord = (coord) => {
+    if (!coord) return null;
+    return (
+      <>
+        <b>Coordinates</b>: Lat:{coord[0]?.toFixed(3)}, lng:
+        {coord[1]?.toFixed(3)}
+      </>
+    );
+  };
+
   const markerUser = (
     <Marker position={centerPosition} icon={IconHouse}>
       <Tooltip permanent offset={[20, -5]}>
@@ -31,8 +41,7 @@ const Map = ({ userPosition, closestStore }) => {
         <br />
         <b>City</b>: {closestStore?.storeName}
         <br />
-        <b>Coordinates</b>: Lat:{userPosition[0].toFixed(3)}, lng:
-        {userPosition[1].toFixed(3)}
+        {showCoord(userPosition)}
         <br />
       </Tooltip>
     </Marker>
@@ -45,8 +54,7 @@ const Map = ({ userPosition, closestStore }) => {
         <br />
         <b>Store name</b>: {closestStore?.storeName}
         <br />
-        <b>Coordinates</b>: Lat:{closestStore?.coordinates[0]}, lng:
-        {closestStore?.coordinates[1]}
+        {showCoord(closestStore?.coordinates)}
         <br />
         <b>State</b>: {closestStore?.isOpen ? 'open' : 'close'}
         <br />

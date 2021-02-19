@@ -5,8 +5,11 @@ const calculateClosestStore = require('../utils/calculateClosestStore');
 const stores = generateStores();
 const router = express.Router();
 
+const memoAllTracks = [];
+
 router.get('/closest', (req, res) => {
   const { latitude, longitude } = req.query;
+  console.log('memoAllTracks: ', memoAllTracks);
 
   if (!latitude || !longitude) {
     res.status(400).json({
@@ -28,6 +31,16 @@ router.get('/closest', (req, res) => {
 
   calculateClosestStore(userPosition, stores).then((closestStore) => {
     console.log('closestStore: ', closestStore);
+    const ipAddress =
+      req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const track = {
+      date: new Date().toUTCString(),
+      position: userPosition,
+      ipAddress,
+      closestStoreId: closestStore.storeId,
+    };
+
+    memoAllTracks.push(track);
 
     res.json({
       store: closestStore,
