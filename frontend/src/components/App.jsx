@@ -32,7 +32,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
+      <div className="header-container">
+        <Header />
+      </div>
       <Map userPosition={userPosition} closestStore={closestStore} />
     </div>
   );

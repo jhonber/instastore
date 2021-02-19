@@ -61,7 +61,7 @@ const Map = ({ userPosition, closestStore }) => {
   };
 
   return (
-    <MapContainer style={{ height: '90vh' }} center={centerPosition} zoom={12}>
+    <MapContainer className="map-container" center={centerPosition} zoom={12}>
       <ChangeCenter center={centerPosition} />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

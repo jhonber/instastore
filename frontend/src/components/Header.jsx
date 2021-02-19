@@ -6,8 +6,8 @@ const Header = ({ userPosition }) => {
     <header className="header">
       <div>{IconLogo}</div>
       <div className="header-buttons">
-        <div>button1</div>
-        <div>button2</div>
+        <button>Get location</button>
+        <button className="center-button">Center map</button>
       </div>
     </header>
   );
