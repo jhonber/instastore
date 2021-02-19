@@ -24,7 +24,7 @@ const App = () => {
           console.log('NO STORE');
         } else {
           console.log('DATA: ', store);
-          setClosestStore(store.coordinates);
+          setClosestStore(store);
         }
       });
     });
@@ -33,7 +33,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <Map userPosition={userPosition} storePosition={closestStore} />
+      <Map userPosition={userPosition} closestStore={closestStore} />
     </div>
   );
 };

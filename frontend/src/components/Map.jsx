@@ -1,24 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap,
+  Tooltip,
+} from 'react-leaflet';
+import moment from 'moment';
+import { IconHouse, IconStore } from './Icons';
 
-const Map = ({ userPosition, storePosition }) => {
+const Map = ({ userPosition, closestStore }) => {
   const Colombia = [4.5709, -74.2973];
   const [centerPosition, setCenterPosition] = useState(Colombia);
+  const [storePosition, setStorePosition] = useState(null);
 
   useEffect(() => {
     if (!userPosition) return;
     setCenterPosition(userPosition);
   }, [userPosition]);
 
+  useEffect(() => {
+    if (!closestStore) return;
+    setStorePosition(closestStore.coordinates);
+  }, [closestStore]);
+
   const markerUser = (
-    <Marker position={centerPosition} open>
-      <Popup>User position</Popup>
+    <Marker position={centerPosition} icon={IconHouse}>
+      <Tooltip permanent offset={[20, -5]}>
+        <b>User Information</b>
+        <br />
+        <b>City</b>: {closestStore?.storeName}
+        <br />
+      </Tooltip>
     </Marker>
   );
 
   const markerStore = (
-    <Marker position={storePosition} open>
-      <Popup>Store position</Popup>
+    <Marker position={storePosition} icon={IconStore}>
+      <Tooltip permanent offset={[20, -5]}>
+        <b>Closest Available Store</b>
+        <br />
+        <b>Store name</b>: {closestStore?.storeName}
+        <br />
+        <b>State</b>: {closestStore?.isOpen ? 'open' : 'close'}
+        <br />
+        <b>Opened</b>: {moment(closestStore?.nextDeliveryTime).calendar()}
+        <br />
+      </Tooltip>
     </Marker>
   );
 
