@@ -1,12 +1,12 @@
 # InstaStore
 
+[Go to test README](docs)
+
 Technical test for back-end and full-stack developers.
 
 - [Instructions](#instructions)
 - [Requirements](#requirements)
 - [Improvements and trade offs](#improvements-and-trade-offs)
-
-[Go to test README](docs)
 
 ## Instructions
 
