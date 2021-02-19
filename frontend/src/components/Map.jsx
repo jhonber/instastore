@@ -31,6 +31,9 @@ const Map = ({ userPosition, closestStore }) => {
         <br />
         <b>City</b>: {closestStore?.storeName}
         <br />
+        <b>Coordinates</b>: Lat:{userPosition[0].toFixed(3)}, lng:
+        {userPosition[1].toFixed(3)}
+        <br />
       </Tooltip>
     </Marker>
   );
@@ -42,10 +45,13 @@ const Map = ({ userPosition, closestStore }) => {
         <br />
         <b>Store name</b>: {closestStore?.storeName}
         <br />
+        <b>Coordinates</b>: Lat:{closestStore?.coordinates[0]}, lng:
+        {closestStore?.coordinates[1]}
+        <br />
         <b>State</b>: {closestStore?.isOpen ? 'open' : 'close'}
         <br />
-        <b>Opened</b>: {moment(closestStore?.nextDeliveryTime).calendar()}
-        <br />
+        <b>Next delivery time</b>:{' '}
+        {moment(closestStore?.nextDeliveryTime).add(1, 'hours').calendar()}
       </Tooltip>
     </Marker>
   );
