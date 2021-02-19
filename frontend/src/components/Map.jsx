@@ -23,9 +23,17 @@ const Map = ({ userPosition, storePosition }) => {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={centerPosition} open>
-        <Popup>User position</Popup>
-      </Marker>
+      {userPosition && (
+        <Marker position={centerPosition} open>
+          <Popup>User position</Popup>
+        </Marker>
+      )}
+
+      {storePosition && (
+        <Marker position={storePosition} open>
+          <Popup>Store position</Popup>
+        </Marker>
+      )}
     </MapContainer>
   );
 };
