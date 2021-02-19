@@ -82,7 +82,7 @@ nextDeliveryTime: UTC Date
 
 ## Deploy
 
-[Instastore](https://instastore-front.herokuapp.com)
+[https://instastore-front.herokuapp.com](https://instastore-front.herokuapp.com)
 
 ## Improvements and trade offs
 
@@ -91,7 +91,8 @@ nextDeliveryTime: UTC Date
   - **UI design**:The UI is really basic, so for a better user experience is necessary invest more time in the design.
   - **Testing**: Is necessary add tests for frontend and backend, to improve software quality.
 
-3. Which trade offs would you make to accomplish this on time? What'd you do next time to deliver more and sacrifice less?
+2. Which trade offs would you make to accomplish this on time? What'd you do next time to deliver more and sacrifice less?
+
    I didn't do somethings due to the deadline:
    - Use persistent strategy to save tracks
    - Invest more time in the UI design
@@ -99,10 +100,12 @@ nextDeliveryTime: UTC Date
 
    For the next time, I would like to spend less time on projects setup and deploy steps, I spent more time than expected on those things.
 
-5. Do you think your service is secure? why?
+3. Do you think your service is secure? why?
+
    No. In this moment the API is available for everyone, in order to restrict the access to the API, some strategy like session management or token can be used. 
    
-7. What would you do to measure the behaviour of your product on a production environment?
+4. What would you do to measure the behaviour of your product on a production environment?
+
    I would like to do stress testing for whole app.
 
 ## Delivery time
