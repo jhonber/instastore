@@ -1,23 +1,21 @@
 const express = require('express');
 const generateStores = require('../utils/generateStores');
+const calculateClosestStore = require('../utils/calculateClosestStore');
 
 const stores = generateStores();
-console.log('stores: ', stores);
 const router = express.Router();
 
 router.get('/closest', (req, res) => {
-  const { userPosition } = req.body;
+  const { latitude, longitude } = req.query;
+  const userPosition = [parseFloat(latitude, 10), parseFloat(longitude, 10)];
   console.log('userPosition: ', userPosition);
 
-  res.json({
-    ok: true,
-    store: {
-      storeId: '1',
-      storeName: 'Store 1',
-      isOpen: true,
-      coordinates: [4.535, -75.6757],
-      nextDeliveryTime: new Date(),
-    },
+  calculateClosestStore(userPosition, stores).then((closestStore) => {
+    console.log('closestStore: ', closestStore);
+
+    res.json({
+      store: closestStore,
+    });
   });
 });
 
