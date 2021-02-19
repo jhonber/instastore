@@ -1,5 +1,8 @@
 const express = require('express');
+const generateStores = require('../utils/generateStores');
 
+const stores = generateStores();
+console.log('stores: ', stores);
 const router = express.Router();
 
 router.get('/closest', (req, res) => {
