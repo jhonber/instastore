@@ -14,6 +14,10 @@ const App = () => {
       const { latitude, longitude } = pos.coords;
       const coord = [latitude, longitude];
       setUserPosition(coord);
+      // const T = [4.711, -74.0721];
+      // setUserPosition(T);
+
+      // getRequest(url, T).then((resp) => {
       getRequest(url, coord).then((resp) => {
         const { store } = resp.data;
         if (!store) {

@@ -10,30 +10,37 @@ const Map = ({ userPosition, storePosition }) => {
     setCenterPosition(userPosition);
   }, [userPosition]);
 
+  const markerUser = (
+    <Marker position={centerPosition} open>
+      <Popup>User position</Popup>
+    </Marker>
+  );
+
+  const markerStore = (
+    <Marker position={storePosition} open>
+      <Popup>Store position</Popup>
+    </Marker>
+  );
+
   const ChangeCenter = ({ center }) => {
     const map = useMap();
-    map.setView(center);
+    if (centerPosition && storePosition) {
+      map.fitBounds([centerPosition, storePosition], { padding: [10, 10] });
+    } else {
+      map.setView(center);
+    }
     return null;
   };
 
   return (
-    <MapContainer style={{ height: '90vh' }} center={centerPosition} zoom={13}>
+    <MapContainer style={{ height: '90vh' }} center={centerPosition} zoom={12}>
       <ChangeCenter center={centerPosition} />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {userPosition && (
-        <Marker position={centerPosition} open>
-          <Popup>User position</Popup>
-        </Marker>
-      )}
-
-      {storePosition && (
-        <Marker position={storePosition} open>
-          <Popup>Store position</Popup>
-        </Marker>
-      )}
+      {userPosition && markerUser}
+      {storePosition && markerStore}
     </MapContainer>
   );
 };
