@@ -68,7 +68,7 @@ const Map = ({ userPosition, closestStore }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {userPosition && markerUser}
-      {storePosition && markerStore}
+      {userPosition && storePosition && markerStore}
     </MapContainer>
   );
 };

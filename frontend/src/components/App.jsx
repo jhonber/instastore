@@ -10,6 +10,7 @@ const App = () => {
   const url = `${Config.urlBase}${Config.closestStore}`;
 
   useEffect(() => {
+    if (userPosition) return;
     navigator.geolocation.getCurrentPosition((pos) => {
       const { latitude, longitude } = pos.coords;
       const coord = [latitude, longitude];
@@ -28,12 +29,12 @@ const App = () => {
         }
       });
     });
-  }, [url]);
+  }, [url, userPosition]);
 
   return (
     <div className="App">
       <div className="header-container">
-        <Header />
+        <Header setUserPosition={setUserPosition} />
       </div>
       <Map userPosition={userPosition} closestStore={closestStore} />
     </div>
