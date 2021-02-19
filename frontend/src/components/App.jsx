@@ -3,19 +3,19 @@ import Map from './Map';
 import Header from './Header';
 
 const App = () => {
-  const [position, setPosition] = useState(null);
+  const [userPosition, setUserPosition] = useState(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
       const { latitude, longitude } = pos.coords;
-      setPosition([latitude, longitude]);
+      setUserPosition([latitude, longitude]);
     });
   }, []);
 
   return (
     <div className="App">
       <Header />
-      <Map userPosition={position} />
+      <Map userPosition={userPosition} />
     </div>
   );
 };
