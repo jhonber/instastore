@@ -1,4 +1,4 @@
 {
   "closestStore": "/store/closest",
-  "urlBase": "http://localhost:3000"
+  "urlBase": "https://instastore-back.herokuapp.com"
 }
