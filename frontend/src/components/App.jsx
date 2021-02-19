@@ -15,19 +15,25 @@ const App = () => {
       const { latitude, longitude } = pos.coords;
       const coord = [latitude, longitude];
       setUserPosition(coord);
-      // const T = [4.711, -74.0721];
+      // const T = [488.711, -74.0721];
       // setUserPosition(T);
 
-      // getRequest(url, T).then((resp) => {
-      getRequest(url, coord).then((resp) => {
-        const { store } = resp.data;
-        if (!store) {
-          console.log('NO STORE');
-        } else {
-          console.log('DATA: ', store);
-          setClosestStore(store);
-        }
-      });
+      // getRequest(url, T)
+      //   .then((resp) => {
+      getRequest(url, coord)
+        .then((resp) => {
+          const { store } = resp.data;
+          if (!store) {
+            alert("There aren't available stores");
+          } else {
+            console.log('Store: ', store);
+            setClosestStore(store);
+          }
+        })
+        .catch((err) => {
+          console.log('err: ', err);
+          alert(err.data.msg);
+        });
     });
   }, [url, userPosition]);
 

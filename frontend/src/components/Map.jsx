@@ -54,7 +54,12 @@ const Map = ({ userPosition, closestStore }) => {
     const map = useMap();
     if (centerPosition && storePosition) {
       map.fitBounds([centerPosition, storePosition], { padding: [10, 10] });
-    } else {
+    } else if (
+      center[0] >= -90 &&
+      center[0] <= 90 &&
+      center[1] >= -180 &&
+      center[1] <= 180
+    ) {
       map.setView(center);
     }
     return null;
