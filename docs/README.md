@@ -1,7 +1,7 @@
 
 ## Content
 
-- [Instructions](#questions)
+- [Questions](#questions)
 - [Answers](#answers)
 - [Architecture](#architecture)
 - [Store](#store)
