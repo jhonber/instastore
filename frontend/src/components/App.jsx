@@ -1,42 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Map from './Map';
-import Header from './Header';
-import Config from '../config.json';
-import { getRequest } from '../apiUtils';
+import React from 'react';
+
+import QrReader from 'react-qr-reader';
 
 const App = () => {
-  const [userPosition, setUserPosition] = useState(null);
-  const [closestStore, setClosestStore] = useState(null);
-  const url = `${Config.urlBase}${Config.closestStore}`;
-
-  useEffect(() => {
-    if (userPosition) return;
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const { latitude, longitude } = pos.coords;
-      const coord = [latitude, longitude];
-      setUserPosition(coord);
-
-      getRequest(url, coord)
-        .then((resp) => {
-          const { store } = resp.data;
-          if (!store) {
-            alert("There aren't available stores");
-          } else {
-            setClosestStore(store);
-          }
-        })
-        .catch((err) => {
-          alert(err.data.msg);
-        });
-    });
-  }, [url, userPosition]);
-
   return (
     <div className="App">
-      <div className="header-container">
-        <Header setUserPosition={setUserPosition} />
-      </div>
-      <Map userPosition={userPosition} closestStore={closestStore} />
+      <QrReader />
     </div>
   );
 };
