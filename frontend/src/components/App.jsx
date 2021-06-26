@@ -1,12 +1,12 @@
 import React from 'react';
 
-import QrReader from 'react-qr-reader';
+import QrReader from './QrReader';
 
 const App = () => {
   return (
-    <div className="App">
-      <QrReader />
-    </div>
+    // <div className="App">
+    <QrReader />
+    // </div>
   );
 };
 

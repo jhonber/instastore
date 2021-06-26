@@ -1,26 +1,24 @@
 import { Component } from 'react';
 import QrReader from 'react-qr-reader';
 
-class Menu extends Component {
-  // @ts-ignore
+class QRreader extends Component {
   constructor(props) {
     super(props);
     this.state = {
       delay: 500,
-      result: 'No result',
+      result: null,
+      error: 'No error',
     };
 
     this.handleScan = this.handleScan.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
-  // @ts-ignore
   handleScan(result) {
-    if (result) {
-      this.setState({ result });
-    }
+    this.setState({ result });
   }
-  // @ts-ignore
+
   handleError(err) {
-    console.error(err);
+    this.setState({ err });
   }
   render() {
     const previewStyle = {
@@ -29,19 +27,22 @@ class Menu extends Component {
     };
 
     return (
-      <div>
-        <QrReader
-          // @ts-ignore
-          delay={this.state.delay}
-          style={previewStyle}
-          onError={this.handleError}
-          onScan={this.handleScan}
-        />
-        {/* @ts-ignore*/}
+      <>
+        <div>
+          {!this.result && (
+            <QrReader
+              delay={this.state.delay}
+              style={previewStyle}
+              onError={this.handleError}
+              onScan={this.handleScan}
+            />
+          )}
+        </div>
         <p>{this.state.result}</p>
-      </div>
+        <p>{this.state.error}</p>
+      </>
     );
   }
 }
 
-export default Menu;
+export default QRreader;
