@@ -1,40 +1,37 @@
-import React, { useState, useRef } from 'react';
-import { QrReader } from '@blackbox-vision/react-qr-reader';
-// import { useTorchLight } from "@blackbox-vision/use-torch-light";
+import { useRef, useCallback, useState } from 'react';
+import Webcam from 'react-webcam';
 
-export default function App() {
-  const streamRef = useRef(null);
-  const [show, setShow] = useState(true);
-  const [data, setData] = useState('NULL');
+const WebcamComponent = () => {
+  const [src, setSrc] = useState(null);
+  const videoConstraints = {
+    width: 400,
+    height: 300,
+    facingMode: 'user',
+  };
 
-  console.info(streamRef.current);
+  const webcamRef = useRef(null);
 
-  // const [on, toggle] = useTorchLight(streamRef.current, {
-  //   debug: true,
-  //   vibrate: 200
-  // });
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setSrc(imageSrc);
+  }, [webcamRef]);
 
   return (
-    <div className="App">
-      <button onClick={() => setShow(!show)} style={{ marginBottom: 16 }}>
-        {show ? 'Unmount QR Reader' : 'Mount QR Reader'}
-      </button>
-      {show && (
-        <QrReader
-          resolution={600}
-          facingMode="environment"
-          onLoad={({ stream }) => (streamRef.current = stream)}
-          onScan={(decoded) => setData(decoded)}
-          onError={(err) => console.info(err)}
-        />
-      )}
-
+    <>
+      <Webcam
+        audio={false}
+        height={300}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        width={400}
+        videoConstraints={videoConstraints}
+      />
+      <button onClick={capture}>Capture photo</button>
       <div>
-        <p>
-          El valor del QR es:{' '}
-          {typeof data === 'object' ? JSON.stringify(data) : data}
-        </p>
+        <img src={src} alt="Screenshot" />
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default WebcamComponent;
