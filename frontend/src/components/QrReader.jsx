@@ -7,6 +7,7 @@ const WebcamComponent = () => {
   const [result, setResult] = useState(null);
   const [err, setErr] = useState(null);
   const [pause, setPause] = useState(false);
+  const [log, setLog] = useState('nothing');
   const videoConstraints = {
     width: 400,
     height: 300,
@@ -16,13 +17,17 @@ const WebcamComponent = () => {
   const webcamRef = useRef(null);
 
   const capture = useCallback(() => {
+    setLog(`tacking picture ${new Date()}`);
     const imageSrc = webcamRef.current.getScreenshot();
     setSrc(imageSrc);
-  }, [webcamRef]);
+
+    const logger = document.getElementById('logger');
+
+    logger.innerText = log;
+  }, [webcamRef, log]);
 
   useEffect(() => {
     if (src) {
-      console.log('src: ', src);
       const img = document.getElementById('qrcode');
       var qr = new QrcodeDecoder();
       qr.decodeFromImage(img)
@@ -40,8 +45,8 @@ const WebcamComponent = () => {
 
   useEffect(() => {
     // Take screenshot every 100 ms
-    const timer = setTimeout(() => !pause && capture(), 100);
-    return clearTimeout(timer);
+    const timer = setInterval(() => !pause && capture(), 300);
+    return () => clearInterval(timer);
   });
 
   return (
@@ -63,6 +68,8 @@ const WebcamComponent = () => {
         />
         <p>Result: {result}</p>
         <p>Error: {err}</p>
+        <p>Logger:</p>
+        <div id="logger"></div>
       </div>
     </>
   );
