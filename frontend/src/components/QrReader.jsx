@@ -42,13 +42,9 @@ const QrReader = ({ handleQr, handleQrError, style }) => {
     <>
       <Webcam
         audio={false}
-        height={300}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={400}
         videoConstraints={{
-          width: 400,
-          height: 300,
           facingMode: 'environment',
         }}
         style={style}
