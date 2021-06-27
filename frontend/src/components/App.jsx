@@ -1,6 +1,6 @@
 import React from 'react';
 
-import QrReader from './QrReader';
+import QrReader from './QrReader2';
 
 const App = () => {
   return (
