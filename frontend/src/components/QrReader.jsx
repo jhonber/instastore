@@ -33,7 +33,7 @@ const WebcamComponent = () => {
       qr.decodeFromImage(img)
         .then(({ data }) => {
           setResult(data);
-          setPause(true);
+          if (data) setPause(true);
           console.log('RES: ', data);
         })
         .catch((err) => {
