@@ -1,48 +1,40 @@
-import { Component } from 'react';
-import QrReader from 'react-qr-reader';
+import React, { useState, useRef } from 'react';
+import { QrReader } from '@blackbox-vision/react-qr-reader';
+// import { useTorchLight } from "@blackbox-vision/use-torch-light";
 
-class QRreader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      delay: 500,
-      result: null,
-      error: 'No error',
-    };
+export default function App() {
+  const streamRef = useRef(null);
+  const [show, setShow] = useState(true);
+  const [data, setData] = useState('NULL');
 
-    this.handleScan = this.handleScan.bind(this);
-    this.handleError = this.handleError.bind(this);
-  }
-  handleScan(result) {
-    this.setState({ result });
-  }
+  console.info(streamRef.current);
 
-  handleError(err) {
-    this.setState({ err });
-  }
-  render() {
-    const previewStyle = {
-      height: 240,
-      width: 320,
-    };
+  // const [on, toggle] = useTorchLight(streamRef.current, {
+  //   debug: true,
+  //   vibrate: 200
+  // });
 
-    return (
-      <>
-        <div>
-          {!this.result && (
-            <QrReader
-              delay={this.state.delay}
-              style={previewStyle}
-              onError={this.handleError}
-              onScan={this.handleScan}
-            />
-          )}
-        </div>
-        <p>{this.state.result}</p>
-        <p>{this.state.error}</p>
-      </>
-    );
-  }
+  return (
+    <div className="App">
+      <button onClick={() => setShow(!show)} style={{ marginBottom: 16 }}>
+        {show ? 'Unmount QR Reader' : 'Mount QR Reader'}
+      </button>
+      {show && (
+        <QrReader
+          resolution={600}
+          facingMode="environment"
+          onLoad={({ stream }) => (streamRef.current = stream)}
+          onScan={(decoded) => setData(decoded)}
+          onError={(err) => console.info(err)}
+        />
+      )}
+
+      <div>
+        <p>
+          El valor del QR es:{' '}
+          {typeof data === 'object' ? JSON.stringify(data) : data}
+        </p>
+      </div>
+    </div>
+  );
 }
-
-export default QRreader;
