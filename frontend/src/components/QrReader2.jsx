@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 const WebcamComponent = () => {
   const video = document.getElementById('qr-video');
+  console.log('video: ', video);
   const camHasFlash = document.getElementById('cam-has-flash');
   const flashToggle = document.getElementById('flash-toggle');
   const flashState = document.getElementById('flash-state');
@@ -11,52 +12,54 @@ const WebcamComponent = () => {
     'cam-qr-result-timestamp'
   );
 
-  useEffect(() => {
-    if (!video) return;
-
-    function setResult(label, result) {
-      label.textContent = result;
-      camQrResultTimestamp.textContent = new Date().toString();
-      label.style.color = 'teal';
-      clearTimeout(label.highlightTimeout);
-      label.highlightTimeout = setTimeout(
-        () => (label.style.color = 'inherit'),
-        100
-      );
-    }
-
-    const scanner = new QrScanner(
-      video,
-      (result) => setResult(camQrResult, result),
-      (error) => {
-        camQrResult.textContent = error;
-        camQrResult.style.color = 'inherit';
-      }
+  // useEffect(() => {
+  console.log('video2: ', video);
+  // setTimeout(() => {
+  console.log('video3: ', video);
+  function setResult(label, result) {
+    label.textContent = result;
+    camQrResultTimestamp.textContent = new Date().toString();
+    label.style.color = 'teal';
+    clearTimeout(label.highlightTimeout);
+    label.highlightTimeout = setTimeout(
+      () => (label.style.color = 'inherit'),
+      100
     );
-    scanner.start().then(() => {
-      scanner.hasFlash().then((hasFlash) => {
-        camHasFlash.textContent = hasFlash;
-        if (hasFlash) {
-          flashToggle.style.display = 'inline-block';
-          flashToggle.addEventListener('click', () => {
-            scanner
-              .toggleFlash()
-              .then(
-                () =>
-                  (flashState.textContent = scanner.isFlashOn() ? 'on' : 'off')
-              );
-          });
-        }
-      });
-    });
-  }, [
-    camQrResult,
-    camQrResultTimestamp,
+  }
+
+  const scanner = new QrScanner(
     video,
-    camHasFlash,
-    flashState,
-    flashToggle,
-  ]);
+    (result) => setResult(camQrResult, result),
+    (error) => {
+      camQrResult.textContent = error;
+      camQrResult.style.color = 'inherit';
+    }
+  );
+  scanner.start().then(() => {
+    scanner.hasFlash().then((hasFlash) => {
+      camHasFlash.textContent = hasFlash;
+      if (hasFlash) {
+        flashToggle.style.display = 'inline-block';
+        flashToggle.addEventListener('click', () => {
+          scanner
+            .toggleFlash()
+            .then(
+              () =>
+                (flashState.textContent = scanner.isFlashOn() ? 'on' : 'off')
+            );
+        });
+      }
+    });
+  });
+  // }, 6000);
+  // }, [
+  //   camQrResult,
+  //   camQrResultTimestamp,
+  //   video,
+  //   camHasFlash,
+  //   flashState,
+  //   flashToggle,
+  // ]);
 
   return (
     <>
