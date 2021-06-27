@@ -47,8 +47,8 @@ const QrReader = ({ handleQr, handleQrError, style }) => {
         width={1280}
         height={720}
         videoConstraints={{
-          width: 1280,
-          height: 720,
+          width: 400,
+          height: 300,
           facingMode: 'environment',
         }}
         style={style}
