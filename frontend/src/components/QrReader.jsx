@@ -6,7 +6,7 @@ const WebcamComponent = () => {
   const videoConstraints = {
     width: 400,
     height: 300,
-    facingMode: 'user',
+    facingMode: 'environment',
   };
 
   const webcamRef = useRef(null);
