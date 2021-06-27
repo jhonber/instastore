@@ -1,53 +1,42 @@
-import { useRef, useCallback, useState, useEffect } from 'react';
-import Webcam from 'react-webcam';
 import QrcodeDecoder from 'qrcode-decoder';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Webcam from 'react-webcam';
 
-const WebcamComponent = () => {
+const QrReader = ({ handleQr, handleQrError, style }) => {
   const [src, setSrc] = useState(null);
-  const [result, setResult] = useState(null);
-  const [err, setErr] = useState(null);
-  const [pause, setPause] = useState(false);
-  const [log, setLog] = useState('nothing');
-  const videoConstraints = {
-    width: 400,
-    height: 300,
-    facingMode: 'environment',
-  };
+  const [done, setDone] = useState(false);
 
   const webcamRef = useRef(null);
 
   const capture = useCallback(() => {
-    setLog(`tacking picture ${new Date()}`);
     const imageSrc = webcamRef.current.getScreenshot();
     setSrc(imageSrc);
-
-    const logger = document.getElementById('logger');
-
-    logger.innerText = log;
-  }, [webcamRef, log]);
+  }, [webcamRef]);
 
   useEffect(() => {
     if (src) {
       const img = document.getElementById('qrcode');
-      var qr = new QrcodeDecoder();
+      const qr = new QrcodeDecoder();
       qr.decodeFromImage(img)
         .then(({ data }) => {
-          setResult(data);
-          if (data) setPause(true);
-          console.log('RES: ', data);
+          if (data) {
+            setDone(true);
+            handleQr(data);
+          }
         })
         .catch((err) => {
-          setErr(err);
-          console.log('ERROR: ', err);
+          handleQrError(err);
         });
     }
-  }, [src]);
+  }, [src, handleQr, handleQrError]);
 
   useEffect(() => {
-    // Take screenshot every 100 ms
-    const timer = setInterval(() => !pause && capture(), 300);
+    // Take screenshot every 300 ms
+    const timer = setInterval(() => !done && capture(), 300);
     return () => clearInterval(timer);
   });
+
+  if (done) return null;
 
   return (
     <>
@@ -57,22 +46,22 @@ const WebcamComponent = () => {
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         width={400}
-        videoConstraints={videoConstraints}
+        videoConstraints={{
+          width: 400,
+          height: 300,
+          facingMode: 'environment',
+        }}
+        style={style}
       />
-      <div>
-        <img
-          id="qrcode"
-          src={src}
-          alt="Screenshot"
-          style={{ height: '250px', width: '250px' }}
-        />
-        <p>Result: {result}</p>
-        <p>Error: {err}</p>
-        <p>Logger:</p>
-        <div id="logger"></div>
-      </div>
+
+      <img
+        id="qrcode"
+        src={src || ''}
+        alt="Screenshot"
+        style={{ height: '250px', width: '250px', display: 'none' }}
+      />
     </>
   );
 };
 
-export default WebcamComponent;
+export default QrReader;
